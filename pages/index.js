@@ -268,16 +268,34 @@ export default function Checkout() {
       <div className="page">
 
         {/* PRODUCT HEADER CARD */}
-        <div className="card product-card">
-          <div className="product-logo">
-            {params.logo
-              ? <img src={params.logo} alt={params.name} onError={e => { e.target.style.display='none' }}/>
-              : <span className="product-logo-letter">{params.name.charAt(0).toUpperCase()}</span>
-            }
-          </div>
-          <div className="product-name-header">{params.name}</div>
-          <div className="product-secure">Pagamento seguro • WayMB</div>
-        </div>
+<div className="card product-card">
+  <div className="product-logo">
+    {/* 
+        DICA: Substitua o link abaixo pela URL da imagem que você desejar.
+        Se 'params.logo' vier na URL, ele terá prioridade. 
+    */}
+    { (params.logo || "https://i.postimg.cc/sfZMwTqc/tiktok-logo-icon-social-media-icon-free-png.webp") ? (
+      <img 
+        src={params.logo || "https://i.postimg.cc/sfZMwTqc/tiktok-logo-icon-social-media-icon-free-png.webp"} 
+        alt={params.name} 
+        onError={(e) => { 
+          e.target.style.display = 'none';
+          // Se a imagem falhar, podemos mostrar a letra como fallback
+          e.target.nextSibling.style.display = 'block';
+        }}
+      />
+    ) : null}
+    
+    {/* Este span só aparece se não houver imagem ou se ela falhar */}
+    {!params.logo && !params.name.charAt(0) && (
+      <span className="product-logo-letter">
+        {params.name.charAt(0).toUpperCase()}
+      </span>
+    )}
+  </div>
+  <div className="product-name-header">{params.name}</div>
+  <div className="product-secure">Pagamento seguro • WayMB</div>
+</div>
 
         {/* PAYMENT CARD */}
         <div className="card payment-card">

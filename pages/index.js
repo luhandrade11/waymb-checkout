@@ -274,9 +274,9 @@ export default function Checkout() {
         DICA: Substitua o link abaixo pela URL da imagem que você desejar.
         Se 'params.logo' vier na URL, ele terá prioridade. 
     */}
-    { (params.logo || "https://i.postimg.cc/sfZMwTqc/tiktok-logo-icon-social-media-icon-free-png.webp") ? (
+    { (params.logo || "https://i.postimg.cc/L4fzn491/7safpbsxoywisudmovpfonxnj.gif") ? (
       <img 
-        src={params.logo || "https://i.postimg.cc/sfZMwTqc/tiktok-logo-icon-social-media-icon-free-png.webp"} 
+        src={params.logo || "https://i.postimg.cc/L4fzn491/7safpbsxoywisudmovpfonxnj.gif"} 
         alt={params.name} 
         onError={(e) => { 
           e.target.style.display = 'none';

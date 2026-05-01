@@ -1,0 +1,8 @@
+{
+  "name": "waymb-checkout",
+  "version": "1.0.0",
+  "description": "WayMB Checkout Page",
+  "engines": {
+    "node": ">=18"
+  }
+}

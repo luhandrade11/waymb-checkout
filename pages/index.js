@@ -132,12 +132,25 @@ export default function Checkout() {
           padding: 1.5rem 1.25rem 1.25rem; text-align: center;
         }
         .product-logo {
-          width: 56px; height: 56px; border-radius: 50%;
+          width: 56px;
+          height: 56px;
+          border-radius: 50%;
           background: #1a1a1a;
-          display: flex; align-items: center; justify-content: center;
-          margin-bottom: 1rem; overflow: hidden; flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 1rem;
+          overflow: hidden;
+          flex-shrink: 0;
         }
-        .product-logo img { width: 150%; height: 150%; object-fit: cover; border-radius: 50%; }
+        /* CORREÇÃO DA CENTRALIZAÇÃO DA LOGO ABAIXO */
+        .product-logo img { 
+          width: 100%; 
+          height: 100%; 
+          object-fit: cover; 
+          border-radius: 50%; 
+          display: block;
+        }
         .product-logo-letter { color: #fff; font-size: 1.4rem; font-weight: 800; }
         .product-name-header { font-size: 1.05rem; font-weight: 700; margin-bottom: .2rem; }
         .product-secure { font-size: .78rem; color: #888; font-weight: 400; }
@@ -224,8 +237,11 @@ export default function Checkout() {
 
         /* success states */
         .success-box {
-          display: flex; flex-direction: column;
-          align-items: center; text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
           padding: 1.25rem 1rem 1rem;
         }
         .success-title  { font-size: 1rem; font-weight: 700; margin-bottom: .35rem; }

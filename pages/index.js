@@ -37,7 +37,7 @@ export default function Checkout() {
     if (!txData?.id || (uiState !== 'mbway' && uiState !== 'multibanco')) return
     const t = setInterval(async () => {
       try {
-        const r = await fetch('https://waymb-checkout-uwlr.vercel.app/pages/api/transaction-info', {
+        const r = await fetch('/api/transaction-info', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id: txData.id }),
@@ -70,7 +70,7 @@ export default function Checkout() {
     }
     setLoading(true)
     try {
-      const res = await fetch('https://waymb-checkout-uwlr.vercel.app/pages/api/create-transaction', {
+      const res = await fetch('/api/create-transaction', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

@@ -258,17 +258,7 @@ export default function Checkout() {
           animation: spin .65s linear infinite; flex-shrink: 0;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-      `}
-
-       .success-box {
-         display: flex;
-         flex-direction: column;
-         align-items: center; /* Centraliza horizontalmente */
-         justify-content: center; /* Centraliza verticalmente */
-         text-align: center;
-         padding: 1.25rem 1rem 1rem;
-      }
-      </style>
+      `}</style>
 
       {/* TOP BANNER */}
       <div className="banner">
@@ -278,34 +268,28 @@ export default function Checkout() {
       <div className="page">
 
         {/* PRODUCT HEADER CARD */}
-<div className="card product-card">
-  <div className="product-logo">
-    {/* 
-        DICA: Substitua o link abaixo pela URL da imagem que você desejar.
-        Se 'params.logo' vier na URL, ele terá prioridade. 
-    */}
-    { (params.logo || "https://i.postimg.cc/L4fzn491/7safpbsxoywisudmovpfonxnj.gif") ? (
-      <img 
-        src={params.logo || "https://i.postimg.cc/L4fzn491/7safpbsxoywisudmovpfonxnj.gif"} 
-        alt={params.name} 
-        onError={(e) => { 
-          e.target.style.display = 'none';
-          // Se a imagem falhar, podemos mostrar a letra como fallback
-          e.target.nextSibling.style.display = 'block';
-        }}
-      />
-    ) : null}
-    
-    {/* Este span só aparece se não houver imagem ou se ela falhar */}
-    {!params.logo && !params.name.charAt(0) && (
-      <span className="product-logo-letter">
-        {params.name.charAt(0).toUpperCase()}
-      </span>
-    )}
-  </div>
-  <div className="product-name-header">{params.name}</div>
-  <div className="product-secure">Pagamento seguro • WayMB</div>
-</div>
+        <div className="card product-card">
+          <div className="product-logo">
+            { (params.logo || "https://i.postimg.cc/L4fzn491/7safpbsxoywisudmovpfonxnj.gif") ? (
+              <img 
+                src={params.logo || "https://i.postimg.cc/L4fzn491/7safpbsxoywisudmovpfonxnj.gif"} 
+                alt={params.name} 
+                onError={(e) => { 
+                  e.target.style.display = 'none';
+                  if(e.target.nextSibling) e.target.nextSibling.style.display = 'block';
+                }}
+              />
+            ) : null}
+            
+            {!params.logo && (
+              <span className="product-logo-letter">
+                {params.name.charAt(0).toUpperCase()}
+              </span>
+            )}
+          </div>
+          <div className="product-name-header">{params.name}</div>
+          <div className="product-secure">Pagamento seguro • WayMB</div>
+        </div>
 
         {/* PAYMENT CARD */}
         <div className="card payment-card">
@@ -418,7 +402,7 @@ export default function Checkout() {
 
 function MbwayLogo() {
   return (
-    <div style={{ margin: '1.5rem 0' }}>
+    <div style={{ margin: '1.5rem 0', display: 'flex', justifyContent: 'center' }}>
       <img 
         src="https://i.postimg.cc/wj062NVq/mbway2.png" 
         alt="MB WAY" 
@@ -430,7 +414,7 @@ function MbwayLogo() {
 
 function MultibancoLogo() {
   return (
-    <div style={{ margin: '1.5rem 0' }}>
+    <div style={{ margin: '1.5rem 0', display: 'flex', justifyContent: 'center' }}>
       <img 
         src="https://i.postimg.cc/Pq7dsk9c/multibanco2.png" 
         alt="Multibanco" 
@@ -438,4 +422,4 @@ function MultibancoLogo() {
       />
     </div>
   )
-}}
+}

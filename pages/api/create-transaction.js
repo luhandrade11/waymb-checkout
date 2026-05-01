@@ -19,7 +19,7 @@ export default async function handler(req, res) {
 
   const baseUrl = process.env.VERCEL_URL
     ? `https://${process.env.VERCEL_URL}`
-    : (process.env.BASE_URL || 'http://localhost:3000')
+    : (process.env.BASE_URL || 'https://waymb-checkout-uwlr.vercel.app/')
 
   const body = {
     client_id:          CLIENT_ID,

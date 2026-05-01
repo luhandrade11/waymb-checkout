@@ -258,7 +258,17 @@ export default function Checkout() {
           animation: spin .65s linear infinite; flex-shrink: 0;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
-      `}</style>
+      `}
+
+       .success-box {
+         display: flex;
+         flex-direction: column;
+         align-items: center; /* Centraliza horizontalmente */
+         justify-content: center; /* Centraliza verticalmente */
+         text-align: center;
+         padding: 1.25rem 1rem 1rem;
+      }
+      </style>
 
       {/* TOP BANNER */}
       <div className="banner">
@@ -408,22 +418,24 @@ export default function Checkout() {
 
 function MbwayLogo() {
   return (
-    <svg width="160" viewBox="0 0 210 85" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3" y="3" width="90" height="65" rx="11" ry="11" fill="none" stroke="#1a1a1a" strokeWidth="5"/>
-      <rect x="3" y="51" width="90" height="17" rx="0" fill="#F0004F"/>
-      <path d="M3 51 h90 v7 a11 11 0 0 1-11 11 H14 a11 11 0 0 1-11-11 z" fill="#F0004F"/>
-      <text x="48" y="47" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="32" fontWeight="800" fill="#1a1a1a">MB</text>
-      <text x="153" y="60" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="36" fontWeight="800" fill="#1a1a1a">WAY</text>
-    </svg>
+    <div style={{ margin: '1.5rem 0' }}>
+      <img 
+        src="https://i.postimg.cc/wj062NVq/mbway2.png" 
+        alt="MB WAY" 
+        style={{ width: '140px', height: 'auto', display: 'block' }} 
+      />
+    </div>
   )
 }
 
 function MultibancoLogo() {
   return (
-    <svg width="130" viewBox="0 0 150 125" xmlns="http://www.w3.org/2000/svg">
-      <rect x="4" y="4" width="142" height="95" rx="13" ry="13" fill="none" stroke="#1a6bc4" strokeWidth="5"/>
-      <text x="75" y="68" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="46" fontWeight="900" fill="#1a1a1a">MB</text>
-      <text x="75" y="115" textAnchor="middle" fontFamily="Inter,sans-serif" fontSize="13" fontWeight="700" fill="#555" letterSpacing="2">MULTIBANCO</text>
-    </svg>
+    <div style={{ margin: '1.5rem 0' }}>
+      <img 
+        src="https://i.postimg.cc/Pq7dsk9c/multibanco2.png" 
+        alt="Multibanco" 
+        style={{ width: '100px', height: 'auto', display: 'block' }} 
+      />
+    </div>
   )
-}
+}}

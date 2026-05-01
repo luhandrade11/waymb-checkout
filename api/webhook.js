@@ -1,4 +1,4 @@
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // Always respond 200 immediately so WayMB confirms delivery
   res.status(200).json({ received: true });
 

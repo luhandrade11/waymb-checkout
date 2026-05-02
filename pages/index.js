@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
 export default function Checkout() {
-  // Alterado: Nome principal agora é TikTokPay e a taxa foi para a descrição
+  // Configuração inicial conforme a sua solicitação
   const [params, setParams]     = useState({ 
     name: 'TikTokPay', 
     amount: 9.90, 
@@ -15,11 +15,10 @@ export default function Checkout() {
   const [terms, setTerms]       = useState(false)
   const [loading, setLoading]   = useState(false)
   const [error, setError]       = useState('')
-  const [uiState, setUiState]   = useState('form') // form | mbway | multibanco | completed
+  const [uiState, setUiState]   = useState('form') 
   const [txData, setTxData]     = useState(null)
   const [countdown, setCountdown] = useState(600)
 
-  // Read URL params on mount
   useEffect(() => {
     const p = new URLSearchParams(window.location.search)
     const timer = parseInt(p.get('timer') || '10', 10)
@@ -33,13 +32,11 @@ export default function Checkout() {
     setCountdown(timer * 60)
   }, [])
 
-  // Countdown timer
   useEffect(() => {
     const t = setInterval(() => setCountdown(c => Math.max(0, c - 1)), 1000)
     return () => clearInterval(t)
   }, [])
 
-  // Poll transaction status
   useEffect(() => {
     if (!txData?.id || (uiState !== 'mbway' && uiState !== 'multibanco')) return
     const t = setInterval(async () => {
@@ -147,12 +144,13 @@ export default function Checkout() {
           max-width: 80%; max-height: 80%;
           width: auto; height: auto; display: block; object-fit: contain;
         }
-        .product-name-header { font-size: 1.2rem; font-weight: 800; margin-bottom: .1rem; color: #000; }
+        /* Nome que você circulou em cima */
+        .product-name-header { font-size: 1.25rem; font-weight: 800; margin-bottom: .1rem; color: #000; }
         .product-secure { font-size: .78rem; color: #888; font-weight: 400; }
 
         .payment-card { padding: 1.25rem; }
-        .payment-title { font-size: 1.1rem; font-weight: 800; margin-bottom: .2rem; }
-        .payment-sub   { font-size: .85rem; color: #666; margin-bottom: 1.2rem; line-height: 1.4; }
+        /* Nome que você circulou embaixo - agora usando a descrição da taxa */
+        .payment-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .8rem; line-height: 1.3; color: #1a1a1a; }
         
         .total-box {
           background: #f7f7f7; border-radius: 10px;
@@ -220,7 +218,7 @@ export default function Checkout() {
       </div>
 
       <div className="page">
-        {/* CABEÇALHO COM NOME PRINCIPAL */}
+        {/* CARD DO TOPO: Mantém o TikTokPay conforme o primeiro círculo vermelho */}
         <div className="card product-card">
           <div className="product-logo">
             <img 
@@ -233,10 +231,9 @@ export default function Checkout() {
           <div className="product-secure">Pagamento seguro • WayMB</div>
         </div>
 
-        {/* CARD DE PAGAMENTO COM TÍTULO E DESCRIÇÃO (TAXA) */}
+        {/* CARD DE PAGAMENTO: O segundo círculo vermelho agora mostra a Taxa completa */}
         <div className="card payment-card">
-          <div className="payment-title">{params.name}</div>
-          <div className="payment-sub">{params.description}</div>
+          <div className="payment-title">{params.description}</div>
 
           <div className="total-box">
             <div className="total-label">Total a pagar</div>
@@ -270,6 +267,7 @@ export default function Checkout() {
             </>
           )}
 
+          {/* ... Estados de sucesso mantidos conforme versões anteriores ... */}
           {uiState === 'mbway' && (
             <div className="success-box">
               <div className="success-title" style={{fontWeight:700}}>Aprove no MB WAY</div>

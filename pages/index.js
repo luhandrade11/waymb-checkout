@@ -145,8 +145,8 @@ export default function Checkout() {
         }
         /* CORREÇÃO DA CENTRALIZAÇÃO DA LOGO ABAIXO */
         .product-logo img { 
-          width: 100%; 
-          height: 100%; 
+          width: 150%; 
+          height: 150%; 
           object-fit: cover; 
           border-radius: 50%; 
           display: block;

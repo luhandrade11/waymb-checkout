@@ -132,8 +132,8 @@ export default function Checkout() {
           padding: 1.5rem 1.25rem 1.25rem; text-align: center;
         }
         .product-logo {
-          width: 60px;
-          height: 60px;
+          width: 64px;
+          height: 64px;
           border-radius: 50%;
           background: #000;
           display: flex;
@@ -142,15 +142,14 @@ export default function Checkout() {
           margin-bottom: 1rem;
           overflow: hidden;
           flex-shrink: 0;
-          border: none;
-          padding: 0;
+          position: relative;
         }
         .product-logo img { 
           width: 100%; 
           height: 100%; 
-          object-fit: cover; 
-          border-radius: 50%; 
+          object-fit: contain; /* Contain garante que a logo apareça inteira e centrada */
           display: block;
+          padding: 10px; /* Espaço para a logo não tocar nas bordas do círculo */
         }
         .product-logo-letter { color: #fff; font-size: 1.4rem; font-weight: 800; }
         .product-name-header { font-size: 1.05rem; font-weight: 700; margin-bottom: .2rem; }

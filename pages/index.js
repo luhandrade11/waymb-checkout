@@ -108,8 +108,7 @@ export default function Checkout() {
       <style jsx global>{`
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
         html, body { min-height: 100%; background: #f2f2f2; font-family: 'Inter', sans-serif; color: #1a1a1a; -webkit-font-smoothing: antialiased; }
-        a { color: inherit; text-decoration: none; }
-
+        
         .banner {
           position: fixed; top: 0; left: 0; right: 0; z-index: 100;
           background: #F0004F; color: #fff;
@@ -136,38 +135,42 @@ export default function Checkout() {
           height: 64px;
           border-radius: 50%;
           background: #000;
-          display: flex;
-          align-items: center;
-          justify-content: center;
           margin-bottom: 1rem;
+          position: relative; /* Base para o posicionamento absoluto */
           overflow: hidden;
           flex-shrink: 0;
-          position: relative;
         }
         .product-logo img { 
-          width: 100%; 
-          height: 100%; 
-          object-fit: center; /* Contain garante que a logo apareça inteira e centrada */
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%); /* Centralização absoluta real */
+          max-width: 80%; /* Garante que não encoste nas bordas */
+          max-height: 80%;
+          width: auto;
+          height: auto;
           display: block;
-          padding: 10px; /* Espaço para a logo não tocar nas bordas do círculo */
+          object-fit: contain;
         }
-        .product-logo-letter { color: #fff; font-size: 1.4rem; font-weight: 800; }
+        .product-logo-letter { 
+          position: absolute;
+          top: 50%; left: 50%;
+          transform: translate(-50%, -50%);
+          color: #fff; font-size: 1.4rem; font-weight: 800; 
+        }
         .product-name-header { font-size: 1.05rem; font-weight: 700; margin-bottom: .2rem; }
         .product-secure { font-size: .78rem; color: #888; font-weight: 400; }
 
-        /* ── Payment card ── */
+        /* ── Resto dos estilos ── */
         .payment-card { padding: 1.25rem; }
         .payment-title { font-size: .95rem; font-weight: 700; margin-bottom: .1rem; }
         .payment-sub   { font-size: .78rem; color: #888; margin-bottom: 1rem; }
-
         .total-box {
           background: #f7f7f7; border-radius: 10px;
           padding: .85rem 1rem; text-align: center; margin-bottom: 1rem;
         }
         .total-label { font-size: .75rem; color: #888; margin-bottom: .25rem; }
         .total-value { font-size: 1.65rem; font-weight: 700; color: #F0004F; letter-spacing: -.02em; }
-
-        /* method tabs */
         .method-tabs { display: flex; gap: .5rem; margin-bottom: 1rem; }
         .method-tab {
           flex: 1; padding: .65rem .5rem;
@@ -178,129 +181,64 @@ export default function Checkout() {
           transition: all .15s; text-align: center;
         }
         .method-tab.active { background: #F0004F; border-color: #F0004F; color: #fff; }
-        .method-tab:not(.active):hover { border-color: #F0004F; color: #F0004F; }
-
-        /* phone input */
         .phone-group {
           display: flex; border: 1.5px solid #d8d8d8;
           border-radius: 10px; overflow: hidden;
-          margin-bottom: 1rem; transition: border-color .15s;
+          margin-bottom: 1rem;
         }
-        .phone-group:focus-within { border-color: #F0004F; }
         .phone-prefix {
           display: flex; align-items: center; gap: .4rem;
-          padding: .75rem .9rem;
-          border-right: 1.5px solid #d8d8d8;
-          font-size: .88rem; font-weight: 500;
-          background: #fafafa; flex-shrink: 0;
+          padding: .75rem .9rem; border-right: 1.5px solid #d8d8d8;
+          font-size: .88rem; font-weight: 500; background: #fafafa;
         }
         .phone-input {
           flex: 1; border: none; outline: none;
-          padding: .75rem .9rem;
-          font-size: .88rem; font-family: 'Inter', sans-serif;
-          color: #1a1a1a; background: transparent;
+          padding: .75rem .9rem; font-size: .88rem;
+          font-family: 'Inter', sans-serif; color: #1a1a1a;
         }
-        .phone-input::placeholder { color: #bbb; }
-
-        /* terms */
         .terms-wrap {
           display: flex; align-items: center; gap: .6rem;
           border: 1.5px solid #e8e8e8; border-radius: 10px;
           padding: .75rem .9rem; margin-bottom: 1rem;
           cursor: pointer; font-size: .82rem; color: #888;
         }
-        .terms-check {
-          width: 18px; height: 18px; accent-color: #F0004F;
-          cursor: pointer; flex-shrink: 0;
-        }
-        .terms-link { color: #F0004F; font-weight: 500; }
-
-        /* error */
         .error-msg {
           background: rgba(240,0,79,.08); border: 1px solid rgba(240,0,79,.2);
-          border-radius: 8px; color: #F0004F;
-          font-size: .78rem; padding: .6rem .85rem; margin-bottom: .85rem;
+          border-radius: 8px; color: #F0004F; font-size: .78rem; padding: .6rem .85rem; margin-bottom: .85rem;
         }
-
-        /* pay button */
         .btn-pay {
           width: 100%; padding: .9rem; border-radius: 50px;
           background: #F0004F; border: none; color: #fff;
           font-size: .95rem; font-weight: 700; cursor: pointer;
-          font-family: 'Inter', sans-serif; letter-spacing: .01em;
-          transition: opacity .15s, transform .1s;
           display: flex; align-items: center; justify-content: center; gap: .5rem;
         }
-        .btn-pay:hover:not(:disabled) { opacity: .9; }
-        .btn-pay:active:not(:disabled) { transform: scale(.99); }
-        .btn-pay:disabled { opacity: .65; cursor: not-allowed; }
-
-        /* success states */
         .success-box {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          padding: 1.25rem 1rem 1rem;
+          display: flex; flex-direction: column; align-items: center; justify-content: center;
+          text-align: center; padding: 1.25rem 1rem 1rem;
         }
-        .success-title  { font-size: 1rem; font-weight: 700; margin-bottom: .35rem; }
-        .success-amount { font-size: 1.1rem; font-weight: 700; color: #F0004F; margin-bottom: 1.25rem; }
-
-        .mb-info { font-size: .85rem; line-height: 2; margin-bottom: 1.25rem; text-align: center; }
-        .mb-info strong { font-weight: 700; }
-        .mb-info .red { color: #F0004F; font-weight: 700; }
-
-        /* polling dots */
         .polling { display: flex; align-items: center; justify-content: center; gap: .4rem; padding-top: .85rem; }
         .dot { width: 6px; height: 6px; border-radius: 50%; background: #aaa; animation: pulse 1.2s ease-in-out infinite; }
-        .dot:nth-child(2) { animation-delay: .2s; }
-        .dot:nth-child(3) { animation-delay: .4s; }
         @keyframes pulse { 0%,100%{opacity:.25} 50%{opacity:1} }
-        .polling-text { font-size: .78rem; color: #888; margin-left: .3rem; }
-
-        /* completed */
-        .completed-icon {
-          width: 56px; height: 56px; border-radius: 50%;
-          background: rgba(34,197,94,.12); border: 2px solid rgba(34,197,94,.3);
-          display: flex; align-items: center; justify-content: center; margin-bottom: 1rem;
-        }
-
-        /* spinner */
-        .spinner {
-          width: 18px; height: 18px;
-          border: 2px solid rgba(255,255,255,.35);
-          border-top-color: #fff; border-radius: 50%;
-          animation: spin .65s linear infinite; flex-shrink: 0;
-        }
+        .spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,.35); border-top-color: #fff; border-radius: 50%; animation: spin .65s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
       `}</style>
 
-      {/* TOP BANNER */}
       <div className="banner">
         ⏰ Oferta expira em {fmtMin}:{fmtSec}
       </div>
 
       <div className="page">
-
-        {/* PRODUCT HEADER CARD */}
+        {/* PRODUCT HEADER CARD CORRIGIDO */}
         <div className="card product-card">
           <div className="product-logo">
             { (params.logo || "https://i.postimg.cc/L4fzn491/7safpbsxoywisudmovpfonxnj.gif") ? (
               <img 
                 src={params.logo || "https://i.postimg.cc/L4fzn491/7safpbsxoywisudmovpfonxnj.gif"} 
                 alt={params.name} 
-                onError={(e) => { 
-                  e.target.style.display = 'none';
-                  if(e.target.nextSibling) e.target.nextSibling.style.display = 'block';
-                }}
+                onError={(e) => { e.target.style.display = 'none'; }}
               />
-            ) : null}
-            
-            {!params.logo && (
-              <span className="product-logo-letter">
-                {params.name.charAt(0).toUpperCase()}
-              </span>
+            ) : (
+              <span className="product-logo-letter">{params.name.charAt(0).toUpperCase()}</span>
             )}
           </div>
           <div className="product-name-header">{params.name}</div>
@@ -312,104 +250,71 @@ export default function Checkout() {
           <div className="payment-title">{params.name}</div>
           <div className="payment-sub">{params.description}</div>
 
-          {/* Total */}
           <div className="total-box">
             <div className="total-label">Total a pagar</div>
             <div className="total-value">{fmtAmount}</div>
           </div>
 
-          {/* FORM STATE */}
           {uiState === 'form' && (
             <>
-              {/* Method tabs */}
               <div className="method-tabs">
-                <button
-                  className={`method-tab${method === 'mbway' ? ' active' : ''}`}
-                  onClick={() => setMethod('mbway')}
-                >MB WAY</button>
-                <button
-                  className={`method-tab${method === 'multibanco' ? ' active' : ''}`}
-                  onClick={() => setMethod('multibanco')}
-                >Multibanco</button>
+                <button className={`method-tab${method === 'mbway' ? ' active' : ''}`} onClick={() => setMethod('mbway')}>MB WAY</button>
+                <button className={`method-tab${method === 'multibanco' ? ' active' : ''}`} onClick={() => setMethod('multibanco')}>Multibanco</button>
               </div>
 
-              {/* Phone — MB WAY only */}
               {method === 'mbway' && (
                 <div className="phone-group">
                   <div className="phone-prefix">🇵🇹 +351</div>
-                  <input
-                    className="phone-input"
-                    type="tel"
-                    placeholder="912 345 678"
-                    inputMode="numeric"
-                    value={phone}
-                    onChange={e => setPhone(formatPhone(e.target.value))}
-                  />
+                  <input className="phone-input" type="tel" placeholder="912 345 678" value={phone} onChange={e => setPhone(formatPhone(e.target.value))} />
                 </div>
               )}
 
-              {/* Terms */}
               <label className="terms-wrap">
-                <input
-                  className="terms-check"
-                  type="checkbox"
-                  checked={terms}
-                  onChange={e => setTerms(e.target.checked)}
-                />
-                <span>Li e aceito os <span className="terms-link">Termos e Condições</span></span>
+                <input style={{width:'18px',height:'18px',accentColor:'#F0004F'}} type="checkbox" checked={terms} onChange={e => setTerms(e.target.checked)} />
+                <span style={{fontSize:'.82rem',color:'#888',marginLeft:'.6rem'}}>Li e aceito os <span style={{color:'#F0004F',fontWeight:'500'}}>Termos e Condições</span></span>
               </label>
 
-              {/* Error */}
               {error && <div className="error-msg">{error}</div>}
 
-              {/* Pay button */}
               <button className="btn-pay" onClick={handlePay} disabled={loading}>
                 {loading ? <><div className="spinner"/><span>A processar...</span></> : 'Pagar agora'}
               </button>
             </>
           )}
 
-          {/* MB WAY STATE */}
           {uiState === 'mbway' && (
             <div className="success-box">
-              <div className="success-title">Aprove no MB WAY</div>
-              <div className="success-amount">{fmtAmount}</div>
+              <div className="success-title" style={{fontWeight:700}}>Aprove no MB WAY</div>
+              <div className="success-amount" style={{color:'#F0004F',fontSize:'1.1rem',margin:'.5rem 0 1rem'}}>{fmtAmount}</div>
               <MbwayLogo/>
               <div className="polling">
                 <div className="dot"/><div className="dot"/><div className="dot"/>
-                <span className="polling-text">A aguardar confirmação...</span>
+                <span style={{fontSize:'.78rem',color:'#888',marginLeft:'.3rem'}}>A aguardar confirmação...</span>
               </div>
             </div>
           )}
 
-          {/* MULTIBANCO STATE */}
           {uiState === 'multibanco' && (
             <div className="success-box">
-              <div className="success-title">Pagamento Multibanco</div>
+              <div className="success-title" style={{fontWeight:700}}>Pagamento Multibanco</div>
               <div className="mb-info">
                 Entidade: <strong>{txData?.referenceData?.entity || '—'}</strong><br/>
                 Referência: <strong>{txData?.referenceData?.reference || '—'}</strong><br/>
-                Valor: <span className="red">{fmtAmount}</span>
+                Valor: <span style={{color:'#F0004F',fontWeight:700}}>{fmtAmount}</span>
               </div>
               <MultibancoLogo/>
             </div>
           )}
 
-          {/* COMPLETED STATE */}
           {uiState === 'completed' && (
             <div className="success-box">
-              <div className="completed-icon">
-                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5">
-                  <polyline points="20 6 9 17 4 12"/>
-                </svg>
+              <div style={{width:'56px',height:'56px',borderRadius:'50%',background:'rgba(34,197,94,.12)',display:'flex',alignItems:'center',justifyContent:'center',marginBottom:'1rem'}}>
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5"><polyline points="20 6 9 17 4 12"/></svg>
               </div>
               <div style={{fontSize:'1rem',fontWeight:700,marginBottom:'.3rem'}}>Pagamento confirmado!</div>
-              <div style={{fontSize:'.82rem',color:'#888',lineHeight:1.5}}>
-                O teu pagamento de <strong style={{color:'#F0004F'}}>{fmtAmount}</strong> foi recebido com sucesso.
-              </div>
+              <div style={{fontSize:'.82rem',color:'#888'}}>O teu pagamento foi recebido com sucesso.</div>
             </div>
           )}
-
         </div>
       </div>
     </>
@@ -418,24 +323,16 @@ export default function Checkout() {
 
 function MbwayLogo() {
   return (
-    <div style={{ margin: '1.5rem 0', display: 'flex', justifyContent: 'center' }}>
-      <img 
-        src="https://i.postimg.cc/wj062NVq/mbway2.png" 
-        alt="MB WAY" 
-        style={{ width: '140px', height: 'auto', display: 'block' }} 
-      />
+    <div style={{ margin: '1rem 0', display: 'flex', justifyContent: 'center' }}>
+      <img src="https://i.postimg.cc/wj062NVq/mbway2.png" alt="MB WAY" style={{ width: '140px', height: 'auto' }} />
     </div>
   )
 }
 
 function MultibancoLogo() {
   return (
-    <div style={{ margin: '1.5rem 0', display: 'flex', justifyContent: 'center' }}>
-      <img 
-        src="https://i.postimg.cc/Pq7dsk9c/multibanco2.png" 
-        alt="Multibanco" 
-        style={{ width: '100px', height: 'auto', display: 'block' }} 
-      />
+    <div style={{ margin: '1rem 0', display: 'flex', justifyContent: 'center' }}>
+      <img src="https://i.postimg.cc/Pq7dsk9c/multibanco2.png" alt="Multibanco" style={{ width: '100px', height: 'auto' }} />
     </div>
   )
 }

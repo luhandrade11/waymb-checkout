@@ -147,7 +147,7 @@ export default function Checkout() {
         .product-logo img { 
           width: 100%; 
           height: 100%; 
-          object-fit: contain; /* Contain garante que a logo apareça inteira e centrada */
+          object-fit: center; /* Contain garante que a logo apareça inteira e centrada */
           display: block;
           padding: 10px; /* Espaço para a logo não tocar nas bordas do círculo */
         }

